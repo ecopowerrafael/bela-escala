@@ -43,6 +43,7 @@ model User {
   mentorMeetings     Meeting[]          @relation("MeetingMentor")
   pointsTransactions PointsTransaction[]
   invoices           Invoice[]
+  lessonProgress     LessonProgress[]
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
 }
