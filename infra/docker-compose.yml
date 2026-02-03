@@ -46,8 +46,8 @@ services:
     container_name: bela-escala-vector-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: bela
-      POSTGRES_PASSWORD: escala
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: bela_vector
     volumes:
       - vector_data:/var/lib/postgresql/data
@@ -73,8 +73,8 @@ services:
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: bela
-      MINIO_ROOT_PASSWORD: escala123
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
     ports:
       - "9000:9000"
       - "9001:9001"
