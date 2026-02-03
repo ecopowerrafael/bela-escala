@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/main.js",
   "prisma": {
-    "seed": "node dist/seed.js"
+    "seed": "node prisma/seed.js"
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
@@ -13,7 +13,7 @@
     "start": "node dist/main.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",
-    "prisma:seed": "npm run build && node dist/seed.js"
+    "prisma:seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@fastify/jwt": "^7.2.0",
