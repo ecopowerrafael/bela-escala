@@ -205,7 +205,13 @@ export default function AdminCoursesPage() {
             ))}
           </div>
         ) : null}
-        {status ? <p className="text-xs text-platinum">{status}</p> : null}
+        {status ? (
+          <p className="text-xs text-platinum mt-4">
+            {status === "ok" ? "Sucesso!" : 
+             status === "token_required" ? "⚠️ Login necessário (use /login)" : 
+             status === "error" ? "Erro ao carregar" : status}
+          </p>
+        ) : null}
       </div>
     </div>
   );

@@ -16,6 +16,15 @@ export const ProductGrid = ({ products }: { products: Product[] }) => {
   const [status, setStatus] = useState<Record<string, string>>({});
   const router = useRouter();
 
+  const getStatusMessage = (code: string) => {
+    switch (code) {
+      case "token_required": return "Faça login para continuar";
+      case "already_owned": return "Você já possui este item";
+      case "error": return "Erro ao adicionar. Tente novamente.";
+      default: return "";
+    }
+  };
+
   const addToCart = async (productId: string) => {
     const token = window.localStorage.getItem("bela_token");
     if (!token) {
@@ -60,14 +69,13 @@ export const ProductGrid = ({ products }: { products: Product[] }) => {
       {products.map((product) => (
         <div key={product.id} className="glass rounded-xl2 p-5 space-y-4">
           <div>
-            <p className="text-sm text-platinum">{product.slug}</p>
             <h3 className="text-lg font-semibold">{product.name}</h3>
             {product.category ? (
-              <span className="inline-flex rounded-full border border-goldStart/40 px-3 py-1 text-xs text-platinum">
+              <span className="inline-flex rounded-full border border-goldStart/40 px-3 py-1 text-xs text-platinum mt-2">
                 {product.category}
               </span>
             ) : null}
-            <p className="text-platinum">
+            <p className="text-platinum mt-2">
               R$ {(product.priceCents / 100).toFixed(2)}
             </p>
           </div>
@@ -86,8 +94,9 @@ export const ProductGrid = ({ products }: { products: Product[] }) => {
               ? "Adicionado!"
               : "Adicionar ao Carrinho"}
           </button>
-          {status[product.id] && status[product.id] !== "success" && status[product.id] !== "loading" ? (
-            <p className="text-xs text-platinum">{status[product.id]}</p>
+          
+          {status[product.id] && getStatusMessage(status[product.id]) ? (
+             <p className="text-xs text-red-400 text-center">{getStatusMessage(status[product.id])}</p>
           ) : null}
         </div>
       ))}

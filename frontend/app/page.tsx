@@ -1,126 +1,115 @@
 import Link from "next/link";
-import { Rail } from "../components/Rail";
-import { ChatWidget } from "../components/ChatWidget";
-import { ProductGrid } from "../components/ProductGrid";
 
-type HomeProduct = {
-  id: string;
-  slug: string;
-  name: string;
-  priceCents: number;
-  category?: string | null;
-  isLocked: boolean;
-};
-
-const fallbackRails = [
-  {
-    title: "Trilha: Estratégia de Marca",
-    items: [
-      { title: "Aula 01 — Fundamentos", subtitle: "20 min" },
-      { title: "Aula 02 — Posicionamento", subtitle: "35 min" },
-      { title: "Aula 03 — Proposta de Valor", subtitle: "40 min", locked: true }
-    ]
-  },
-  {
-    title: "Clube Premium",
-    items: [
-      { title: "Masterclass: Growth", subtitle: "Ao vivo" },
-      { title: "Boardroom: Mentores", subtitle: "Network", locked: true },
-      { title: "Sala VIP", subtitle: "Exclusivo", locked: true }
-    ]
-  }
-];
-
-const fetchHome = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiUrl) return null;
-
-  const demoUserId = process.env.NEXT_PUBLIC_DEMO_USER_ID;
-  const url = demoUserId ? `${apiUrl}/home?userId=${demoUserId}` : `${apiUrl}/home`;
-
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) return null;
-    const data = (await response.json()) as { products?: HomeProduct[] };
-    return data.products ?? null;
-  } catch {
-    return null;
-  }
-};
-
-export default async function HomePage() {
-  const products = await fetchHome();
-  const productCards = products ?? [];
-  const rails = products
-    ? [
-        {
-          title: "Conteúdos disponíveis",
-          items: products.map((product) => ({
-            title: product.name,
-            subtitle: product.slug,
-            locked: product.isLocked
-          }))
-        }
-      ]
-    : fallbackRails;
-
+export default function WelcomePage() {
   return (
-    <div className="min-h-screen bg-piano">
-      <header className="px-10 pt-10 flex items-center justify-between">
-        <div>
-          <p className="text-platinum text-sm">Bela Escala</p>
-          <h1 className="text-3xl font-semibold">
-            Mentoria <span className="gold-text">Premium</span>
-          </h1>
-        </div>
-        <nav className="flex gap-6 text-sm text-platinum">
-          <Link href="/">Home</Link>
-          <Link href="/map">Mapa</Link>
-          <Link href="/catalog">Catálogo</Link>
-          <Link href="/courses">Trilhas</Link>
-          <Link href="/meetings">Meetings</Link>
-          <Link href="/checkout">Carrinho</Link>
-          <Link href="/onboarding">Onboarding</Link>
-          <Link href="/admin">Admin</Link>
-          <button className="rounded-full bg-gradient-to-br from-goldStart to-goldEnd px-5 py-2 text-sm font-semibold text-black">
-            Entrar
-          </button>
-        </nav>
-      </header>
+    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 sm:p-8 font-sans overflow-hidden">
+       {/* Phone Mockup Frame */}
+       <div className="relative w-full max-w-[380px] h-[800px] bg-[#0A0A0A] rounded-[3rem] border-8 border-[#1a1a1a] shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col ring-1 ring-white/10">
+          
+          {/* Dynamic Island / Recorte decorativo */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-7 w-32 bg-black rounded-b-2xl z-20 pointer-events-none border-b border-l border-r border-[#222]"></div>
 
-      <section className="px-10 py-12">
-        <div className="relative overflow-hidden rounded-xl2 glass p-10">
-          <div className="max-w-xl space-y-4">
-            <p className="text-platinum text-sm">Netflix Original • Bela Escala</p>
-            <h2 className="text-4xl font-semibold">
-              Escale com mentores de elite
-            </h2>
-            <p className="text-platinum">
-              Trilhas guiadas, reuniões estratégicas e comunidade privada em um
-              ecossistema autônomo.
-            </p>
-            <div className="flex gap-4">
-              <button className="rounded-full bg-gradient-to-br from-goldStart to-goldEnd px-6 py-3 text-sm font-semibold text-black">
-                Começar agora
-              </button>
-              <button className="rounded-full border border-goldStart/60 px-6 py-3 text-sm text-platinum">
-                Ver planos
-              </button>
-            </div>
+          {/* Screen Content */}
+          <div className="flex-1 overflow-y-auto no-scrollbar bg-gradient-to-b from-[#0e0e0e] to-[#000000] relative flex flex-col items-center pt-14 pb-10 px-6">
+             
+             {/* Textura de fundo sutil */}
+             <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")'}}></div> 
+
+             {/* Header */}
+             <div className="flex flex-col items-center space-y-4 z-10 w-full mb-8">
+                {/* Logo Icon */}
+                <div className="relative group">
+                    <div className="absolute -inset-2 bg-goldStart/20 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                    <svg width="48" height="48" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative drop-shadow-2xl">
+                      <path d="M20 0L40 20L20 40L0 20L20 0Z" fill="url(#goldGradient)" />
+                      <defs>
+                        <linearGradient id="goldGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="#F2D47E"/>
+                          <stop offset="0.5" stopColor="#D4AF37"/>
+                          <stop offset="1" stopColor="#B8860B"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                </div>
+                
+                <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F2D47E] tracking-[0.25em] text-xs font-bold uppercase drop-shadow-sm">
+                    Bela Escala
+                </h1>
+                
+                {/* Curved Divider Line */}
+                <div className="w-full max-w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60"></div>
+             </div>
+
+             {/* Welcome Message */}
+             <div className="z-10 text-center mb-8 space-y-2">
+                <h2 className="text-3xl font-light text-[#F5F5F5] leading-tight tracking-tight">
+                  Seja bem-vindo<br/>ao <span className="font-semibold text-white dropdown-shadow">Bela Escala!</span>
+                </h2>
+             </div>
+
+             {/* Elevated Card */}
+             <div className="z-10 w-full bg-[#141414] border border-[#D4AF37]/10 rounded-[2rem] p-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)] relative group cursor-pointer transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] hover:border-[#D4AF37]/30">
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                
+                <div className="space-y-5 relative">
+                  <div className="space-y-1">
+                    <h3 className="text-white text-lg font-medium leading-tight">Como usar a plataforma</h3>
+                    <p className="text-platinum/50 text-xs font-light tracking-wide">Um passo a passo para você começar</p>
+                  </div>
+
+                  {/* Video Thumbnail */}
+                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-gray-900 border border-white/5 shadow-inner group-hover:shadow-2xl transition-all">
+                      {/* Image */}
+                      {/* Using a reliable placeholder if local assets are missing. In prod, replace with local file. */}
+                      <img 
+                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop" 
+                        alt="Preview" 
+                        className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      
+                      {/* Play Button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                         <div className="h-14 w-14 rounded-full bg-[#D4AF37]/90 backdrop-blur-md flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.4)] pl-1 transition-all group-hover:scale-110 group-hover:bg-[#F2D47E]">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0A0A0A" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M8 5V19L19 12L8 5Z" />
+                            </svg>
+                         </div>
+                      </div>
+                  </div>
+
+                  <p className="text-platinum/30 text-[10px] text-center uppercase tracking-[0.2em] font-medium">
+                     Assista agora
+                  </p>
+                </div>
+             </div>
+
+             {/* Spacer to push content */}
+             <div className="flex-1 min-h-[40px]"></div>
+
+             {/* CTA Button */}
+             <div className="z-10 w-full mb-4">
+               <Link href="/login" className="group relative block w-full">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#D4AF37] to-[#F2D47E] rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+                  <div className="relative flex items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37] to-[#C5A028] py-4 px-6 shadow-xl transition-all active:scale-95 group-hover:brightness-110">
+                    <span className="text-[#050505] font-bold text-sm tracking-widest uppercase">Vamos lá</span>
+                  </div>
+               </Link>
+             </div>
+
           </div>
-          <div className="absolute -right-10 -top-8 h-48 w-48 rounded-full bg-gradient-to-br from-goldStart to-goldEnd opacity-30 blur-3xl" />
-        </div>
-      </section>
-
-      <main className="px-10 pb-16 space-y-10">
-        {rails.map((rail) => (
-          <Rail key={rail.title} title={rail.title} items={rail.items} />
-        ))}
-        {productCards.length > 0 ? <ProductGrid products={productCards} /> : null}
-        <div className="flex justify-end">
-          <ChatWidget />
-        </div>
-      </main>
+       </div>
+       
+       <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+       `}</style>
     </div>
   );
 }

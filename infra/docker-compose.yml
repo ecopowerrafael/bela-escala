@@ -55,10 +55,12 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://46.202.147.151:3000
     container_name: bela_escala_web
     restart: always
     environment:
-      NEXT_PUBLIC_API_URL: https://api.apipgsoft.shop
+      NEXT_PUBLIC_API_URL: http://46.202.147.151:3000
     ports:
       - "3001:3000"
     networks:
