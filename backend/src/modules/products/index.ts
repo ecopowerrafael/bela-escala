@@ -19,7 +19,7 @@ export const registerProductsModule = async (app: FastifyInstance) => {
 		});
 
 		return {
-			products: products.map((entry) => ({
+			products: products.map((entry: any) => ({
 				id: entry.product.id,
 				slug: entry.product.slug,
 				name: entry.product.name,

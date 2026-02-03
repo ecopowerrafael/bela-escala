@@ -19,6 +19,7 @@
     "@fastify/jwt": "^7.2.0",
     "@prisma/client": "^5.12.1",
     "bcryptjs": "^2.4.3",
+    "bela-escala-backend": "file:",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2"
   },

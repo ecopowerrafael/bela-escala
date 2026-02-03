@@ -50,7 +50,7 @@ export default async function MapPage() {
     <div className="min-h-screen bg-piano px-10 py-10">
       <header className="flex items-center justify-between">
         <div>
-          <p className="text-platinum text-sm">Bela Escala</p>
+          <img src="/logo.png" alt="Bela Escala" className="h-6 w-auto mb-2" />
           <h1 className="text-2xl font-semibold">
             Mapa <span className="gold-text">Global</span>
           </h1>

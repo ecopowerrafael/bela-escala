@@ -14,24 +14,11 @@ export default function WelcomePage() {
              
              {/* Header Section */}
              <div className="flex flex-col items-center space-y-4 w-full mt-10 sm:mt-0 mb-8 sm:mb-10">
-                {/* Logo Icon */}
+                {/* Logo Image */}
                 <div className="relative group">
                     <div className="absolute -inset-2 bg-goldStart/20 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                    <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative drop-shadow-2xl">
-                      <path d="M20 0L40 20L20 40L0 20L20 0Z" fill="url(#goldGradient)" />
-                      <defs>
-                        <linearGradient id="goldGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                          <stop stopColor="#F2D47E"/>
-                          <stop offset="0.5" stopColor="#D4AF37"/>
-                          <stop offset="1" stopColor="#B8860B"/>
-                        </linearGradient>
-                      </defs>
-                    </svg>
+                    <img src="/logo.png" alt="Bela Escala" className="h-16 w-auto relative drop-shadow-2xl hover:scale-110 transition-transform duration-300" />
                 </div>
-                
-                <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F2D47E] tracking-[0.25em] text-sm font-bold uppercase drop-shadow-sm">
-                    Bela Escala
-                </h1>
                 
                 {/* Curved Divider Line */}
                 <div className="w-full max-w-[120px] h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60"></div>

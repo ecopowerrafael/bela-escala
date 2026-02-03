@@ -17,7 +17,7 @@ export const registerUsersModule = async (app: FastifyInstance) => {
 			}
 		});
 
-		const members = mentors.map((mentor) => ({
+		const members = mentors.map((mentor: any) => ({
 			id: mentor.id,
 			name: mentor.name,
 			role: mentor.headline ?? "Mentor",

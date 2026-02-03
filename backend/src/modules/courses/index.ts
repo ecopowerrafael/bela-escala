@@ -36,7 +36,7 @@ export const registerCoursesModule = async (app: FastifyInstance) => {
       const owned = await prisma.userProduct.findFirst({
         where: {
           userId,
-          productId: { in: course.products.map((p) => p.productId) }
+          productId: { in: course.products.map((p: any) => p.productId) }
         }
       });
 

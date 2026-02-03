@@ -45,7 +45,7 @@ export const ChatWidget = () => {
   return (
     <div className="glass rounded-xl2 p-4 w-full max-w-sm space-y-4">
       <div>
-        <p className="text-sm text-platinum">Agente Bela Escala</p>
+        <img src="/logo.png" alt="Bela Escala" className="h-5 w-auto mb-2" />
         <h3 className="text-lg font-semibold">Suporte inteligente</h3>
       </div>
       <div className="space-y-3 max-h-52 overflow-y-auto pr-2">

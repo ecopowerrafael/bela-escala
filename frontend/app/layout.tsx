@@ -17,7 +17,7 @@ export default function RootLayout({
         {/* Imagem de Fundo Global */}
         <div 
           className="fixed inset-0 z-[-1] opacity-30 pointer-events-none bg-cover bg-center bg-no-repeat bg-fixed mix-blend-overlay"
-          style={{ backgroundImage: "url('/bg-premium.png')" }} 
+          style={{ backgroundImage: "url('/bg-premium.jpg')" }} 
         />
         {children}
       </body>

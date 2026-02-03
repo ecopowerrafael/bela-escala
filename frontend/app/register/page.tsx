@@ -65,9 +65,7 @@ export default function RegisterPage() {
 
                  <div className="mb-8 text-center relative z-10">
                      <Link href="/" className="inline-block mb-4 hover:scale-105 transition-transform duration-300">
-                        <h1 className="text-3xl font-serif tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#F2D47E] drop-shadow-sm" style={{ fontFamily: 'Playfair Display, serif' }}>
-                           <span className="italic mr-1 text-4xl">B</span>ela Escala
-                        </h1>
+                        <img src="/logo.png" alt="Bela Escala" className="h-14 w-auto mx-auto" />
                      </Link>
                      <h2 className="text-white/60 font-light text-sm tracking-wide uppercase">Crie sua conta Gratuita</h2>
                  </div>

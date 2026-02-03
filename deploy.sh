@@ -1,32 +1,34 @@
 #!/bin/bash
 
 # 🚀 Script de Deploy Automatizado - Bela Escala
-# Execute com: bash deploy.sh
+# Execute com: sudo bash deploy.sh
 
 set -e  # Parar em caso de erro
 
-echo "======================================"
-echo "🚀 Bela Escala - Deploy Automatizado"
-echo "======================================"
+echo "╔════════════════════════════════════════════════════════╗"
+echo "║   🚀 Bela Escala - Deploy Automatizado para VPS Ubuntu  ║"
+echo "╚════════════════════════════════════════════════════════╝"
 echo ""
 
 # Cores
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Verificar se está rodando como root ou com sudo
-if [ "$EUID" -eq 0 ]; then 
-  echo -e "${RED}❌ Não execute como root. Use seu usuário normal.${NC}"
+# Verificar se está rodando com sudo
+if [ "$EUID" -ne 0 ]; then 
+  echo -e "${RED}❌ Execute com sudo: sudo bash deploy.sh${NC}"
   exit 1
 fi
 
 # Verificar se Docker está instalado
 if ! command -v docker &> /dev/null; then
-    echo -e "${RED}❌ Docker não encontrado. Instale primeiro:${NC}"
-    echo "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh"
-    exit 1
+    echo -e "${BLUE}📦 Instalando Docker...${NC}"
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    rm get-docker.sh
 fi
 
 # Verificar se Docker Compose está instalado
