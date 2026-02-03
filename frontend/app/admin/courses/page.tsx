@@ -10,6 +10,7 @@ type Course = {
   slug: string;
   category?: string | null;
   lessons: { id: string; title: string; order: number }[];
+  products?: { productId: string; product?: { name: string } }[];
 };
 
 export default function AdminCoursesPage() {
