@@ -2,22 +2,24 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Instalar dependências
+# Copy all source files first
 COPY package*.json ./
-RUN npm ci --only=production && npm install -g prisma
-
-# Copiar código fonte
 COPY tsconfig.json ./
 COPY src ./src
 COPY prisma ./prisma
 
-# Compilar TypeScript
+# Install dependencies and Prisma
+RUN npm ci --only=production && npm install -g prisma
+
+# Generate Prisma types
+RUN npx prisma generate
+
+# Compile TypeScript
 RUN npm install --save-dev typescript @types/node && npm run build && npm uninstall --save-dev typescript @types/node
 
-# Limpar node_modules de dev
+# Clean dev dependencies
 RUN npm ci --only=production
 
 EXPOSE 3000
 
-# O comando será sobrescrito pelo docker-compose
 CMD ["npm", "start"]

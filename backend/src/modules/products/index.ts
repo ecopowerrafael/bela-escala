@@ -87,7 +87,6 @@ export const registerProductsModule = async (app: FastifyInstance) => {
 		if (!userId) {
 			return { products: [] };
 		}
-
 		const [products, user] = await Promise.all([
 			prisma.product.findMany({
 				select: { id: true, slug: true, name: true, priceCents: true, category: true }
@@ -98,9 +97,9 @@ export const registerProductsModule = async (app: FastifyInstance) => {
 			})
 		]);
 
-		const owned = new Set(user?.purchasedProducts.map((p) => p.productId));
+		const owned = new Set(user?.purchasedProducts.map((p: { productId: string }) => p.productId));
 
-		const productsWithLock = products.map((product) => ({
+		const productsWithLock = products.map((product: { id: string; slug: string; name: string; priceCents: number; category: string }) => ({
 			...product,
 			isLocked: !owned.has(product.id)
 		}));
