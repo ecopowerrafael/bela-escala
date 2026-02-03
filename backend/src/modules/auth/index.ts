@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma.js";
 import bcrypt from "bcryptjs";
-import { Role } from "@prisma/client";
+import { Role, UserRoles } from "../../lib/types";
 
 type JwtPayload = {
 	sub: string;

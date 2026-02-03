@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma.js";
-import { Role } from "@prisma/client";
+import { Role } from "../../lib/types";
 
 export const registerCoursesModule = async (app: FastifyInstance) => {
   app.get("/courses", async () => {
