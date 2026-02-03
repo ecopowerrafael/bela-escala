@@ -18,7 +18,10 @@ RUN npm ci --only=production && npm install -g prisma
 RUN npx prisma generate
 
 # Compile TypeScript
-RUN npm install --save-dev typescript @types/node && npm run build && npm uninstall --save-dev typescript @types/node
+RUN npm install --save-dev typescript @types/node
+RUN npm run build
+RUN npx tsc prisma/seed.ts --target ES2022 --module NodeNext --moduleResolution NodeNext --esModuleInterop
+RUN npm uninstall --save-dev typescript @types/node
 
 # Clean dev dependencies
 RUN npm ci --only=production
