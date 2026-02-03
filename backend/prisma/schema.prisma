@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MENTOR
+  PREMIUM
+  FREE
+}
+
+enum MeetingStatus {
+  PENDENTE
+  CONFIRMADA
+  CONCLUIDA
+}
+
+enum InvoiceStatus {
+  PENDENTE
+  PAGA
+  CANCELADA
+}
+
+model User {
+  id                 String             @id @default(uuid())
+  email              String             @unique
+  name               String
+  passwordHash       String
+  role               Role               @default(FREE)
+  headline           String?
+  city               String?
+  socials            Json?
+  points             Int                @default(0)
+  rankId             String?
+  rank               Rank?              @relation(fields: [rankId], references: [id])
+  purchasedProducts  UserProduct[]
+  meetings           Meeting[]          @relation("MeetingOwner")
+  mentorMeetings     Meeting[]          @relation("MeetingMentor")
+  pointsTransactions PointsTransaction[]
+  invoices           Invoice[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+}
+
+model Rank {
+  id        String  @id @default(uuid())
+  name      String  @unique
+  minPoints Int
+  users     User[]
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  slug        String        @unique
+  name        String
+  priceCents  Int
+  category    String?
+  users       UserProduct[]
+  courses     CourseProduct[]
+  invoices    Invoice[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model UserProduct {
+  userId    String
+  productId String
+  purchasedAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId])
+  @@index([productId])
+}
+
+model Meeting {
+  id          String         @id @default(uuid())
+  userId      String
+  mentorId    String?
+  status      MeetingStatus @default(PENDENTE)
+  jitsiRoomId String
+  scheduledAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  user   User  @relation("MeetingOwner", fields: [userId], references: [id])
+  mentor User? @relation("MeetingMentor", fields: [mentorId], references: [id])
+}
+
+model PointsTransaction {
+  id         String   @id @default(uuid())
+  userId     String
+  actionType String
+  points     Int
+  timestamp  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model KnowledgeBaseEntry {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  tags      String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  title       String
+  description String?
+  category    String?
+  lessons     Lesson[]
+  products    CourseProduct[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Lesson {
+  id          String    @id @default(uuid())
+  courseId    String
+  title       String
+  durationMin Int
+  order       Int
+  contentUrl  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  course   Course   @relation(fields: [courseId], references: [id])
+  progress LessonProgress[]
+
+  @@index([courseId])
+  @@unique([courseId, order])
+}
+
+model LessonProgress {
+  id        String   @id @default(uuid())
+  userId    String
+  lessonId  String
+  completed Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  lesson Lesson @relation(fields: [lessonId], references: [id])
+
+  @@unique([userId, lessonId])
+  @@index([lessonId])
+}
+
+model CourseProduct {
+  courseId    String
+  productId   String
+
+  course  Course  @relation(fields: [courseId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([courseId, productId])
+  @@index([productId])
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  userId        String
+  productId     String
+  status        InvoiceStatus @default(PENDENTE)
+  amountCents   Int
+  invoiceNumber String        @unique
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}
+
+

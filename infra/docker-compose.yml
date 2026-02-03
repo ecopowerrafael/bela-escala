@@ -1,0 +1,114 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: bela-escala-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://bela:escala@db:5432/bela_escala?schema=public
+      REDIS_URL: redis://redis:6379
+      VECTOR_DATABASE_URL: postgresql://bela:escala@vector-db:5432/bela_vector?schema=public
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: bela
+      MINIO_SECRET_KEY: escala123
+      MINIO_BUCKET: bela-escala
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - db
+      - redis
+      - vector-db
+      - minio
+    ports:
+      - "3000:3000"
+    networks:
+      - bela-net
+
+  db:
+    image: postgres:15
+    container_name: bela-escala-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bela
+      POSTGRES_PASSWORD: escala
+      POSTGRES_DB: bela_escala
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - bela-net
+
+  vector-db:
+    image: pgvector/pgvector:pg15
+    container_name: bela-escala-vector-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bela
+      POSTGRES_PASSWORD: escala
+      POSTGRES_DB: bela_vector
+    volumes:
+      - vector_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - bela-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: bela-escala-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - bela-net
+
+  minio:
+    image: minio/minio:RELEASE.2024-01-16T16-07-38Z
+    container_name: bela-escala-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: bela
+      MINIO_ROOT_PASSWORD: escala123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - bela-net
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: bela-escala-npm
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      DB_SQLITE_FILE: /data/database.sqlite
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - bela-net
+
+networks:
+  bela-net:
+    driver: bridge
+
+volumes:
+  db_data:
+  vector_data:
+  redis_data:
+  minio_data:
+  npm_data:
+  npm_letsencrypt:
