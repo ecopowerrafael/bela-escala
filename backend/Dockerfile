@@ -4,6 +4,8 @@ COPY package.json package-lock.json* ./
 RUN npm install
 
 FROM base AS build
+COPY prisma ./prisma
+RUN npx prisma generate
 COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
@@ -14,5 +16,4 @@ ENV NODE_ENV=production
 COPY package.json package-lock.json* ./
 RUN npm install --omit=dev
 COPY --from=build /app/dist ./dist
-EXPOSE 3000
-CMD ["node", "dist/main.js"]
+COPY prisma ./prisma
