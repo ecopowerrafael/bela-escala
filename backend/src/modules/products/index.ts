@@ -99,7 +99,7 @@ export const registerProductsModule = async (app: FastifyInstance) => {
 
 		const owned = new Set(user?.purchasedProducts.map((p: { productId: string }) => p.productId));
 
-		const productsWithLock = products.map((product: { id: string; slug: string; name: string; priceCents: number; category: string }) => ({
+		const productsWithLock = products.map((product: { id: string; slug: string; name: string; priceCents: number; category: string | null }) => ({
 			...product,
 			isLocked: !owned.has(product.id)
 		}));

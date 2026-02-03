@@ -1,4 +1,4 @@
-import type { Role } from "@prisma/client";
+import { Role } from "@prisma/client";
 import { FastifyRequest, FastifyReply } from "fastify";
 
 declare module "@fastify/jwt" {
