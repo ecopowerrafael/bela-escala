@@ -1,20 +1,23 @@
-FROM node:20-alpine AS base
-WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install
-COPY prisma ./prisma
-RUN npx prisma generate
+FROM node:20-alpine
 
-FROM base AS build
+WORKDIR /app
+
+# Instalar dependências
+COPY package*.json ./
+RUN npm ci --only=production && npm install -g prisma
+
+# Copiar código fonte
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run build
+COPY prisma ./prisma
 
-FROM node:20-alpine AS runtime
-WORKDIR /app
-ENV NODE_ENV=production
-COPY package.json package-lock.json* ./
-RUN npm install --omit=dev
-COPY --from=build /app/dist ./dist
+# Compilar TypeScript
+RUN npm install --save-dev typescript @types/node && npm run build && npm uninstall --save-dev typescript @types/node
+
+# Limpar node_modules de dev
+RUN npm ci --only=production
+
 EXPOSE 3000
-CMD ["node", "dist/main.js"]
+
+# O comando será sobrescrito pelo docker-compose
+CMD ["npm", "start"]
