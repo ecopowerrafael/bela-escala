@@ -25,10 +25,10 @@ export const registerChatModule = async (app: FastifyInstance) => {
 		const entries = await prisma.knowledgeBaseEntry.findMany({
 			where: {
 				OR: [
-					{ title: { contains: message, mode: "insensitive" } },
-					{ content: { contains: message, mode: "insensitive" } },
-					...terms.map((term) => ({ title: { contains: term, mode: "insensitive" } })),
-					...terms.map((term) => ({ content: { contains: term, mode: "insensitive" } })),
+					{ title: { search: message } },
+					{ content: { search: message } },
+					...terms.map((term) => ({ title: { search: term } })),
+					...terms.map((term) => ({ content: { search: term } })),
 					...terms.map((term) => ({ tags: { has: term } }))
 				]
 			},
