@@ -39,6 +39,13 @@ export const bootstrap = async () => {
 
   app.get("/health", async () => ({ status: "ok" }));
 
+  app.get("/", async () => ({
+    name: "Bela Escala API",
+    version: "1.0.0",
+    status: "online",
+    documentation: "/documentation" // Placeholder if swagger is added later
+  }));
+
   await registerAuthModule(app);
   await registerProductsModule(app);
   await registerMeetingsModule(app);
