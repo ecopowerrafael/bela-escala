@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma.js";
-import { Role } from "../../lib/types";
+import { Role } from "../../lib/types.js";
 
 type SocialTag = { label: string; color: string };
 

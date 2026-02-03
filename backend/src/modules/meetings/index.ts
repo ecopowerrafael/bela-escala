@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma.js";
-import { MeetingStatus, Role } from "../../lib/types";
+import { MeetingStatus, Role } from "../../lib/types.js";
 
 export const registerMeetingsModule = async (app: FastifyInstance) => {
   app.post(

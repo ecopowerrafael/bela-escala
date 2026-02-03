@@ -6,7 +6,7 @@ import { registerMeetingsModule } from "./modules/meetings/index.js";
 import { registerChatModule } from "./modules/chat/index.js";
 import { registerUsersModule } from "./modules/users/index.js";
 import { registerAuthModule } from "./modules/auth/index.js";
-import { Role } from "./lib/types";
+import { Role } from "./lib/types.js";
 import { registerOnboardingModule } from "./modules/onboarding/index.js";
 import { registerAdminModule } from "./modules/admin/index.js";
 import { registerCoursesModule } from "./modules/courses/index.js";

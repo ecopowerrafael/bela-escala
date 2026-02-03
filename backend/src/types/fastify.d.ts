@@ -1,7 +1,7 @@
 import "@fastify/jwt";
 import "fastify";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { Role } from "../lib/types";
+import type { Role } from "../lib/types.js";
 
 declare module "@fastify/jwt" {
   interface FastifyJWT {
