@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma.js";
-import { InvoiceStatus } from "../../lib/types.js";
+import { InvoiceStatus } from "@prisma/client";
 
 const generateInvoiceNumber = () => {
   const date = new Date();

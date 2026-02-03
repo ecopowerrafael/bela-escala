@@ -1,6 +1,7 @@
 import "dotenv/config";
 import Fastify from "fastify";
 import jwt from "@fastify/jwt";
+import { Role } from "@prisma/client";
 import { registerProductsModule } from "./modules/products/index.js";
 import { registerMeetingsModule } from "./modules/meetings/index.js";
 import { registerChatModule } from "./modules/chat/index.js";
