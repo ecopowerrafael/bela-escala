@@ -50,6 +50,20 @@ services:
     networks:
       - bela-net
 
+  # Frontend Next.js
+  web:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: bela_escala_web
+    restart: always
+    environment:
+      NEXT_PUBLIC_API_URL: https://api.apipgsoft.shop
+    ports:
+      - "3001:3000"
+    networks:
+      - bela-net
+
   # Redis Cache
   redis:
     image: redis:7-alpine
