@@ -15,7 +15,7 @@ export const ChatWidget = () => {
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
 
-    const nextMessages = [...messages, { role: "user", content: input.trim() }];
+    const nextMessages: ChatMessage[] = [...messages, { role: "user", content: input.trim() }];
     setMessages(nextMessages);
     setInput("");
     setLoading(true);
