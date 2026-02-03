@@ -1,6 +1,6 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { prisma } from "../../lib/prisma.js";
-import { Role } from "../../lib/types.js";
+import { Role } from "@prisma/client";
 
 type SocialTag = { label: string; color: string };
 
@@ -51,7 +51,7 @@ export const registerUsersModule = async (app: FastifyInstance) => {
 	app.patch(
 		"/admin/users/:id/role",
 		{ preHandler: [app.authorize([Role.ADMIN])] },
-		async (request, reply) => {
+		async (request: FastifyRequest, reply: FastifyReply) => {
 			const { id } = request.params as { id: string };
 			const { role } = request.body as { role?: Role };
 
